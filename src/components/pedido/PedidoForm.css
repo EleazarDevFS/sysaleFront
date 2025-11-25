@@ -1,0 +1,179 @@
+.pedido-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #2cdaa6;
+}
+
+.form-section h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 18px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2cdaa6;
+  box-shadow: 0 0 0 2px rgba(44, 218, 166, 0.2);
+}
+
+.btn-add-product {
+  margin-top: 15px;
+  background-color: #17a2b8;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-add-product:hover {
+  background-color: #138496;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+}
+
+.productos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.producto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.producto-info {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.producto-info strong {
+  color: #2cdaa6;
+  min-width: 150px;
+}
+
+.producto-info span {
+  font-size: 14px;
+  color: #666;
+}
+
+.btn-delete-small {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: transform 0.2s ease;
+}
+
+.btn-delete-small:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 3px #ff4444);
+}
+
+.total-section {
+  margin-top: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 6px;
+  text-align: right;
+  border: 2px solid #2cdaa6;
+}
+
+.total-section h3 {
+  margin: 0;
+  color: #2cdaa6;
+  font-size: 24px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px solid #e9ecef;
+}
+
+.btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #2cdaa6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #24b88e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(44, 218, 166, 0.3);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
