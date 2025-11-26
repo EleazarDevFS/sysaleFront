@@ -49,6 +49,29 @@
 .pedido-id {
   font-size: 18px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tipo-badge {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.tipo-physical {
+  color: #6c757d;
+}
+
+.tipo-online {
+  color: #007bff;
+}
+
+.tipo-fisico-online {
+  color: #28a745;
 }
 
 .pedido-estado {

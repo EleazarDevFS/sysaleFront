@@ -7,6 +7,7 @@ function App() {
   const [pedidos, setPedidos] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingPedido, setEditingPedido] = useState(null);
+  const [tipoPedido, setTipoPedido] = useState('fisico-online'); // 'physical', 'online', 'fisico-online'
 
   // Cargar pedidos al montar el componente
   useEffect(() => {
@@ -15,39 +16,80 @@ function App() {
 
   const fetchPedidos = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/tienda');
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Pedidos recibidos del backend:', data);
-        // Extraemos los pedidos y les agregamos el id
-        const pedidosData = data.map(item => ({
+      // Obtener pedidos de los tres endpoints
+      const [physicalResponse, onlineResponse, fisicoOnlineResponse] = await Promise.all([
+        fetch('http://localhost:8080/api/tienda/physical'),
+        fetch('http://localhost:8080/api/tienda/online')//,
+        // fetch('http://localhost:8080/api/tienda')
+      ]);
+
+      const allPedidos = [];
+
+      if (physicalResponse.ok) {
+        const physicalData = await physicalResponse.json();
+        const physicalPedidos = physicalData.map(item => ({
           ...item.pedido,
-          id: item.id
+          id: item.id,
+          tipo: 'physical'
         }));
-        
-        setPedidos(pedidosData);
-      } else {
-        console.error('Error al cargar los pedidos:', response.status);
+        allPedidos.push(...physicalPedidos);
       }
+
+      if (onlineResponse.ok) {
+        const onlineData = await onlineResponse.json();
+        const onlinePedidos = onlineData.map(item => ({
+          ...item.pedido,
+          id: item.id,
+          tipo: 'online'
+        }));
+        allPedidos.push(...onlinePedidos);
+      }
+
+      // if (fisicoOnlineResponse.ok) {
+      //   const fisicoOnlineData = await fisicoOnlineResponse.json();
+      //   const fisicoOnlinePedidos = fisicoOnlineData.map(item => ({
+      //     ...item.pedido,
+      //     id: item.id,
+      //     tipo: 'fisico-online'
+      //   }));
+      //   allPedidos.push(...fisicoOnlinePedidos);
+      // }
+
+      console.log('Todos los pedidos:', allPedidos);
+      setPedidos(allPedidos);
     } catch (error) {
       console.error('Error de conexión:', error);
     }
   };
 
-  const handleCreate = () => {
+  const handleCreate = (tipo) => {
+    setTipoPedido(tipo);
     setEditingPedido(null);
     setShowForm(true);
   };
 
   const handleEdit = (pedido) => {
+    setTipoPedido(pedido.tipo || 'fisico-online');
     setEditingPedido(pedido);
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, tipo) => {
     if (window.confirm('¿Estás seguro de eliminar este pedido?')) {
       try {
-        const response = await fetch(`http://localhost:8080/api/tienda/${id}`, {
+        let url;
+        switch(tipo) {
+          case 'physical':
+            url = `http://localhost:8080/api/tienda/physical/${id}`;
+            break;
+          case 'online':
+            url = `http://localhost:8080/api/tienda/online/${id}`;
+            break;
+          default:
+            url = `http://localhost:8080/api/tienda/${id}`;
+        }
+
+        const response = await fetch(url, {
           method: 'DELETE',
         });
         
@@ -66,11 +108,35 @@ function App() {
 
   const handleSubmit = async (formData) => {
     try {
-      const url = editingPedido 
-        ? `http://localhost:8080/api/tienda/${editingPedido.id}`
-        : 'http://localhost:8080/api/tienda';
-      
-      const method = editingPedido ? 'PUT' : 'POST';
+      let url, method;
+
+      if (editingPedido) {
+        // Editando pedido existente
+        method = 'PUT';
+        switch(tipoPedido) {
+          case 'physical':
+            url = `http://localhost:8080/api/tienda/physical/${editingPedido.id}`;
+            break;
+          case 'online':
+            url = `http://localhost:8080/api/tienda/online/${editingPedido.id}`;
+            break;
+          default:
+            url = `http://localhost:8080/api/tienda/${editingPedido.id}`;
+        }
+      } else {
+        // Creando nuevo pedido
+        method = 'POST';
+        switch(tipoPedido) {
+          case 'physical':
+            url = 'http://localhost:8080/api/tienda/physical';
+            break;
+          case 'online':
+            url = 'http://localhost:8080/api/tienda/online';
+            break;
+          default:
+            url = 'http://localhost:8080/api/tienda';
+        }
+      }
 
       const response = await fetch(url, {
         method: method,
@@ -113,9 +179,15 @@ function App() {
         <main>
           {!showForm && (
             <div className="action-bar">
-              <button className="btn-add" onClick={handleCreate}>
-                ➕ Nuevo Pedido
+              <button className='btn-add' onClick={() => handleCreate('physical')}>
+                ➕ Nuevo Pedido En tienda fisica
               </button>
+              <button className='btn-add' onClick={() => handleCreate('online')}>
+                ➕ Nuevo Pedido Online
+              </button>
+              {/* <button className="btn-add" onClick={() => handleCreate('fisico-online')}>
+                ➕ Nuevo Pedido Fisico-Online
+              </button> */}
             </div>
           )}
           

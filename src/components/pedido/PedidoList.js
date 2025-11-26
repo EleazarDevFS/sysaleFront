@@ -10,9 +10,16 @@ function PedidoList({ pedidos, onEdit, onDelete }) {
       ) : (
         <div className="pedidos-container">
           {pedidos.map((pedido) => (
-            <div key={pedido.id} className="pedido-card">
+            <div key={`${pedido.tipo}-${pedido.id}`} className="pedido-card">
               <div className="pedido-header">
-                <div className="pedido-id">Pedido #{pedido.id}</div>
+                <div className="pedido-id">
+                  Pedido #{pedido.id} 
+                  <span className={`tipo-badge tipo-${pedido.tipo}`}>
+                    {pedido.tipo === 'physical' ? ' Tienda Física' : 
+                     pedido.tipo === 'online' ? ' Online' : 
+                     ' Físico-Online'}
+                  </span>
+                </div>
                 <div className={`pedido-estado estado-${pedido.estado?.toLowerCase()}`}>
                   {pedido.estado}
                 </div>
@@ -64,7 +71,7 @@ function PedidoList({ pedidos, onEdit, onDelete }) {
                 <button className="btn-edit" onClick={() => onEdit(pedido)} title="Editar">
                  Editar
                 </button>
-                <button className="btn-delete" onClick={() => onDelete(pedido.id)} title="Eliminar">
+                <button className="btn-delete" onClick={() => onDelete(pedido.id, pedido.tipo)} title="Eliminar">
                  Eliminar
                 </button>
               </div>
