@@ -30,7 +30,10 @@ function App() {
         const physicalPedidos = physicalData.map(item => ({
           ...item.pedido,
           id: item.id,
-          tipo: 'physical'
+          tipo: 'physical',
+          // preserve tienda-specific fields that live at item level
+          horarioAtencion: item.horarioAtencion ?? null,
+          numeroEmpleados: item.numeroEmpleados ?? null
         }));
         allPedidos.push(...physicalPedidos);
       }
@@ -40,7 +43,10 @@ function App() {
         const onlinePedidos = onlineData.map(item => ({
           ...item.pedido,
           id: item.id,
-          tipo: 'online'
+          tipo: 'online',
+          // preserve online-specific fields
+          envioGratis: item.envioGratis ?? null,
+          urlWeb: item.urlWeb ?? null
         }));
         allPedidos.push(...onlinePedidos);
       }
@@ -138,13 +144,44 @@ function App() {
         }
       }
 
+      // Build request body depending on the tienda type so top-level tienda fields
+      // (like horarioAtencion, numeroEmpleados, envioGratis, urlWeb) are included
+      let bodyPayload;
+      if (tipoPedido === 'physical') {
+        bodyPayload = {
+          horarioAtencion: formData.horarioAtencion ?? null,
+          numeroEmpleados: formData.numeroEmpleados ?? null,
+          pedido: {
+            cliente: formData.cliente,
+            detalles: formData.detalles,
+            estado: formData.estado,
+            fechaPedido: formData.fechaPedido,
+            total: formData.total
+          }
+        };
+      } else if (tipoPedido === 'online') {
+        bodyPayload = {
+          envioGratis: formData.envioGratis ?? null,
+          urlWeb: formData.urlWeb ?? null,
+          pedido: {
+            cliente: formData.cliente,
+            detalles: formData.detalles,
+            estado: formData.estado,
+            fechaPedido: formData.fechaPedido,
+            total: formData.total
+          }
+        };
+      } else {
+        bodyPayload = { pedido: formData };
+      }
+
       const response = await fetch(url, {
         method: method,
         headers: {
           'Content-Type': 'application/json',
           'accept': '*/*'
         },
-        body: JSON.stringify({ pedido: formData })
+        body: JSON.stringify(bodyPayload)
       });
 
       if (response.ok) {
@@ -194,6 +231,7 @@ function App() {
           {showForm ? (
             <PedidoForm 
               pedido={editingPedido}
+              tipo={tipoPedido}
               onSubmit={handleSubmit}
               onCancel={handleCancel}
             />

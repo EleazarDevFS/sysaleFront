@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './PedidoForm.css';
 
-function PedidoForm({ pedido, onSubmit, onCancel }) {
+function PedidoForm({ pedido, onSubmit, onCancel, tipo }) {
   const [formData, setFormData] = useState({
     cliente: {
       nombre: '',
@@ -42,6 +42,17 @@ function PedidoForm({ pedido, onSubmit, onCancel }) {
       setFormData(pedido);
     }
   }, [pedido]);
+
+  const handleTopLevelChange = (e) => {
+    const { name, value, type: inputType, checked } = e.target;
+    let v = value;
+    if (inputType === 'checkbox') v = checked;
+    if (name === 'numeroEmpleados') v = parseInt(v) || 0;
+    setFormData({
+      ...formData,
+      [name]: v
+    });
+  };
 
   const handleClienteChange = (e) => {
     const { name, value } = e.target;
@@ -224,6 +235,39 @@ function PedidoForm({ pedido, onSubmit, onCancel }) {
           </select>
         </div>
       </div>
+
+      {/* Tienda-specific fields */}
+      {tipo === 'physical' && (
+        <div className="form-section">
+          <h3> Datos de la Tienda (Físico)</h3>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Horario de Atención:</label>
+              <input type="text" name="horarioAtencion" value={formData.horarioAtencion ?? ''} onChange={handleTopLevelChange} />
+            </div>
+            <div className="form-group">
+              <label>Número de Empleados:</label>
+              <input type="number" name="numeroEmpleados" value={formData.numeroEmpleados ?? ''} onChange={handleTopLevelChange} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {tipo === 'online' && (
+        <div className="form-section">
+          <h3> Datos Online</h3>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Envío Gratis:</label>
+              <input type="checkbox" name="envioGratis" checked={!!formData.envioGratis} onChange={handleTopLevelChange} />
+            </div>
+            <div className="form-group">
+              <label>URL Web:</label>
+              <input type="text" name="urlWeb" value={formData.urlWeb ?? ''} onChange={handleTopLevelChange} />
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="form-section">
         <h3> Agregar Productos</h3>
