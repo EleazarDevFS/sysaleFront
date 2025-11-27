@@ -1,70 +1,195 @@
-# Getting Started with Create React App
+# SySale Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sistema de gestión de pedidos y tiendas desarrollado con React.
 
-## Available Scripts
+## 📋 Descripción
 
-In the project directory, you can run:
+**SySale** es una aplicación frontend que permite gestionar pedidos y tiendas de manera eficiente. Construida con **React 19.2.0** y **Create React App**, proporciona una interfaz intuitiva para la administración de operaciones comerciales.
 
-### `npm start`
+## Características
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Gestión de pedidos (crear, listar, editar)
+- Administración de tiendas
+- Interfaz reactiva y moderna
+- Componentes reutilizables
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Estructura del Proyecto
 
-### `npm test`
+```
+sysale/
+├── public/
+│   ├── index.html
+│   ├── manifest.json
+│   └── robots.txt
+├── src/
+│   ├── components/
+│   │   ├── pedido/
+│   │   │   ├── PedidoForm.js
+│   │   │   └── PedidoList.js
+│   │   └── tienda/
+│   │       ├── TiendaForm.js
+│   │       └── TiendaList.js
+│   ├── App.js
+│   └── index.js
+└── package.json
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Requisitos Previos
 
-### `npm run build`
+Antes de comenzar, asegúrate de tener instalado:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Node.js** (versión 14.0 o superior)
+- **npm** (versión 6.0 o superior) o **yarn**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> [!TIP]
+> Puedes verificar las versiones instaladas con:
+> ```bash
+> node --version
+> npm --version
+> ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Instalación
 
-### `npm run eject`
+1. **Clona el repositorio:**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+git clone https://github.com/EleazarDevFS/sysaleFront.git
+cd sysaleFront
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Instala las dependencias:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+> [!NOTE]
+> Si prefieres usar **yarn**, ejecuta: `yarn install`
 
-## Learn More
+## Ejecución del Proyecto
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Modo Desarrollo
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Para ejecutar la aplicación en modo desarrollo:
 
-### Code Splitting
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+La aplicación se abrirá automáticamente en [http://localhost:3000](http://localhost:3000)
 
-### Analyzing the Bundle Size
+> [!TIP]
+> El modo desarrollo incluye **Hot Reload**, por lo que los cambios se reflejarán automáticamente sin necesidad de recargar la página manualmente.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Construir para Producción
 
-### Making a Progressive Web App
+Para crear una versión optimizada para producción:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npm run build
+```
 
-### Advanced Configuration
+Los archivos optimizados se generarán en la carpeta `build/`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+> [!IMPORTANT]
+> La versión de producción está minificada y optimizada para el mejor rendimiento.
 
-### Deployment
+### Ejecutar Pruebas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Para ejecutar las pruebas en modo interactivo:
 
-### `npm run build` fails to minify
+```bash
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Conexión con el Backend
+
+> [!WARNING]
+> Este frontend requiere que el backend esté ejecutándose. Asegúrate de configurar correctamente la URL del API en tu aplicación.
+
+Por defecto, la aplicación espera que el backend esté disponible en:
+- **Desarrollo**: `http://localhost:8080` (ajusta según tu configuración)
+
+## Tecnologías Utilizadas
+
+- **React** 19.2.0
+- **React DOM** 19.2.0
+- **React Scripts** 5.0.1
+- **Testing Library** (Jest DOM, React Testing Library)
+- **Web Vitals**
+
+## Scripts Disponibles
+
+| Comando | Descripción |
+|---------|-------------|
+| `npm start` | Inicia el servidor de desarrollo |
+| `npm run build` | Construye la aplicación para producción |
+| `npm test` | Ejecuta las pruebas unitarias |
+| `npm run eject` | Expone la configuración de Webpack (⚠️ irreversible) |
+
+> [!WARNING]
+> El comando `npm run eject` es **irreversible**. Solo úsalo si necesitas control total sobre la configuración.
+
+## Solución de Problemas
+
+### El puerto 3000 ya está en uso
+
+Si el puerto 3000 está ocupado, puedes:
+
+1. Matar el proceso que usa el puerto:
+```bash
+kill -9 $(lsof -t -i:3000)
+```
+
+2. O usar un puerto diferente:
+```bash
+PORT=3001 npm start
+```
+
+### Errores de dependencias
+
+Si encuentras errores de dependencias, intenta:
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Problemas con permisos
+
+Si tienes problemas de permisos al instalar dependencias:
+
+```bash
+sudo npm install --unsafe-perm=true --allow-root
+```
+
+> [!NOTE]
+> En Linux, evita usar `sudo` con npm. Considera configurar npm para usar un directorio de usuario.
+
+## Contribuciones
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Haz un fork del proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## Licencia
+
+Este proyecto es privado y está sujeto a los términos establecidos por el propietario.
+
+## Autor
+
+**EleazarDevFS**
+
+- GitHub: [@EleazarDevFS](https://github.com/EleazarDevFS)
+
+## Soporte
+
+Si tienes alguna pregunta o problema, por favor abre un issue en el repositorio.
+
+---
+
+**¡Si este proyecto te fue útil, considera darle una estrella!**
